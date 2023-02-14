@@ -1,6 +1,8 @@
 package com.hspedu.generic.homework;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author Agony
@@ -10,13 +12,14 @@ import java.util.*;
 public class Homework02 {
     public static void main(String[] args) {
 
-        Dao<User> userDao = new Dao<>();
+        Dao<User> userDao = new Dao<>(new HashMap<>());
         userDao.save("001", new User(1, 18, "jack"));
         userDao.save("002", new User(2, 13, "tom"));
         userDao.save("003", new User(3, 23, "smith"));
         userDao.save("004", new User(4, 34, "marry"));
 
-        List<User> list = userDao.list();
+        // List<User> list = userDao.list();
+        Collection<User> list = userDao.list();
         System.out.println(list);
 
     }
@@ -70,6 +73,14 @@ class User {
 class Dao<T> {
 
     private Map<String, T> map = new HashMap<>();
+    // Map<String, T> map;
+
+    public Dao(Map<String, T> map) {
+        this.map = map;
+    }
+
+    public Dao() {
+    }
 
     public void save(String id, T entity) {
         map.put(id, entity);
@@ -83,15 +94,18 @@ class Dao<T> {
         map.put(id, entity);
     }
 
-    public List<T> list() {
+    public Collection<T> list() {
 
-        ArrayList<T> ts = new ArrayList<>();
-        Set<Map.Entry<String, T>> entries = map.entrySet();
-        for (Map.Entry<String, T> entry : entries) {
-            ts.add(entry.getValue());
-        }
+        // ArrayList<T> ts = new ArrayList<>();
+        // Set<Map.Entry<String, T>> entries = map.entrySet();
+        // for (Map.Entry<String, T> entry : entries) {
+        //     ts.add(entry.getValue());
+        // }
+        //
+        // return ts;
 
-        return ts;
+        return map.values();
+
 
     }
 
